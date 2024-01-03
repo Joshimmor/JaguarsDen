@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import {useScroll, useTransform,motion} from "framer-motion"
+import {useScroll, useTransform,motion, useViewportScroll,circOut,easeIn } from "framer-motion"
 import "./Home.css"
 export default function Home() {
     const ref = useRef(null);
@@ -8,9 +8,10 @@ export default function Home() {
       offset: ["start start", "end start"],
     });
 
-    const y1 = useTransform(scrollY, [0, 200], [0, 100]);
-    const y2 = useTransform(scrollY, [0, 255], [0, 100]);
-  
+    const { scrollYProgress } = useViewportScroll();
+    const y1 = useTransform( scrollYProgress, [0, 1], ["0%", "74%"],{ ease: easeIn });
+    const y2 = useTransform( scrollYProgress, [0, 1], ["0%", "50%"],{ ease: easeIn });
+    const y3 = useTransform( scrollYProgress, [0, 1], ["0%", "64%"],{ ease: easeIn });
 
   
     return (
@@ -24,7 +25,8 @@ export default function Home() {
             </div>
             <motion.div className="top-tree-hero"
                 style={{
-                    top:`${y2} px`
+                    y:y3,
+                    paddingTop:'60px'
                 }}
             >
                 <div
@@ -34,7 +36,40 @@ export default function Home() {
                     backgroundPosition:'left',
                     backgroundPositionY: 'top',
                     backgroundSize:'contain',
-                    width:'30%',
+                    backgroundColor:"rgb(255, 255, 255,0.15)",
+                    backgroundBlendMode:"saturation",
+                    width:'25%',
+                    height:"100vh",
+                }}
+                />
+                <div
+                style={{
+                    backgroundImage:'url(/RIGHTT.png)',
+                    backgroundPosition:'right',
+                    backgroundRepeat:'no-repeat',
+                    backgroundPositionY: 'top',
+                    backgroundSize:'contain',
+                    backgroundColor:"rgb(255, 255, 255,0.15)",
+                    backgroundBlendMode:"saturation",
+                    width:'25%',
+                    height:"100vh",
+                   
+                }}
+                />
+            </motion.div>
+            <motion.div className="top-tree-hero"
+                style={{
+                    y:y2
+                }}
+            >
+                <div
+                style={{
+                    backgroundImage:'url(/LEFTT.png)',
+                    backgroundRepeat:'no-repeat',
+                    backgroundPosition:'left',
+                    backgroundPositionY: 'top',
+                    backgroundSize:'contain',
+                    width:'40%',
                     height:"100vh"
                 }}
                 />
@@ -45,7 +80,7 @@ export default function Home() {
                     backgroundRepeat:'no-repeat',
                     backgroundPositionY: 'top',
                     backgroundSize:'contain',
-                    width:'30%',
+                    width:'40%',
                     height:"100vh"
                 }}
                 />
